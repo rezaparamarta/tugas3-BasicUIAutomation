@@ -1,0 +1,30 @@
+{
+  "name": "tugas3-basicuiautomation",
+  "version": "1.0.0",
+  "description": "Tugas Basic Automation Cypress dari After Office",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rezaparamarta/tugas3-BasicUIAutomation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/rezaparamarta/tugas3-BasicUIAutomation/issues"
+  },
+  "homepage": "https://github.com/rezaparamarta/tugas3-BasicUIAutomation#readme",
+  "devDependencies": {
+    "chai": "^5.2.0",
+    "mocha": "^11.2.2",
+    "supertest": "^7.1.0"
+  },
+  "dependencies": {
+    "cypress": "^14.3.3",
+    "cypress-xpath": "^2.0.1"
+  }
+}
