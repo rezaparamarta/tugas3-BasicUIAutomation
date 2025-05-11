@@ -81,4 +81,21 @@ describe('Add New Employee', function () {
       // verify success add employee
       cy.url().should('contains', '/web/index.php/pim/viewPersonalDetails/empNumber/');
   });
+
+  // Test Case Soal 2
+  it.only('Login and Add Jatah Cuti', function() {
+    // Ensure Leave and Click its module
+    cy.xpath("//a[@class='oxd-main-menu-item active']").should('be.visible');
+    cy.get(':nth-child(3) > .oxd-main-menu-item').click();
+  
+    // Click Entitlements
+    cy.get('.oxd-topbar-body-nav > ul > :nth-child(3)').click();
+    cy.xpath("//a[normalize-space()='Add Entitlements']").click();
+
+    // Type on Employee Name*
+    cy.xpath("//div[@class='oxd-autocomplete-text-input oxd-autocomplete-text-input--active']").type("akhil");
+    cy.wait(3000);
+    cy.xpath("//div[contains(@class, 'oxd-autocomplete-text-input')]//div[@class='oxd-autocomplete-dropdown-menu']//li[normalize-space()='Akhil Akbar']").click();
+
+  });
 });
