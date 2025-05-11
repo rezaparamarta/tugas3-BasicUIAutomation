@@ -20,6 +20,7 @@
   "homepage": "https://github.com/rezaparamarta/tugas3-BasicUIAutomation#readme",
   "devDependencies": {
     "chai": "^5.2.0",
+    "cypress-file-upload": "^5.0.8",
     "mocha": "^11.2.2",
     "supertest": "^7.1.0"
   },
