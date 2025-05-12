@@ -12,12 +12,14 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       // Optional: tambahkan listener Node.js kalau diperlukan
     },
-    supportFile: "cypress/support/e2e.js",
+    supportFile: "cypress/support/commands.js",
+    specPattern: "cypress/e2e/**/*.cy.{js,jsx,ts,tsx}",
     defaultCommandTimeout: 30000,
     baseUrl: "https://opensource-demo.orangehrmlive.com/",
     env: {
       username: "Admin",
       password: "admin123",
-    }
+    },
+    video: false,
   },
 });

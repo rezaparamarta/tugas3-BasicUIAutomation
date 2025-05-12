@@ -23,6 +23,7 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import 'cypress-xpath';
 Cypress.Commands.add('login', (username, password) => {
     cy.visit("/web/index.php/auth/login");
   
