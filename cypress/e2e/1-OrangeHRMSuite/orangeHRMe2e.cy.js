@@ -26,7 +26,7 @@ describe('Add New Employee', function () {
     cy.xpath("//input[@type='file']")
       .should('exist')
       //.selectFile("C:\\Users\\Reza Paramarta\\photo.jpg", { force: true });
-      .selectFile("../../../photo.jpg", { force: true });
+      .selectFile("cypress/fixtures/photo.jpg", { force: true });
     // Verify file upload
     cy.xpath("//input[@type='file']")
       .invoke('val')

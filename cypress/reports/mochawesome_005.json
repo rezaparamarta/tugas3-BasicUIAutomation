@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-05-12T05:31:17.713Z",
+    "end": "2025-05-12T05:31:36.101Z",
+    "duration": 18388,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "a03a790c-84f1-408a-acb1-0a33ba7a010d",
+      "title": "",
+      "fullFile": "cypress\\e2e\\1-OrangeHRMSuite\\orangeHRMe2e.cy.js",
+      "file": "cypress\\e2e\\1-OrangeHRMSuite\\orangeHRMe2e.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "90f77e5c-3c47-48cf-b374-15405cdeaf24",
+          "title": "Add New Employee",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Soal ke 1 - Positive Case - Login and Add New Employee",
+              "fullTitle": "Add New Employee Soal ke 1 - Positive Case - Login and Add New Employee",
+              "timedOut": null,
+              "duration": 18191,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get(':nth-child(2) > .oxd-main-menu-item').click();\ncy.url().should('include', '/web/index.php/pim/viewEmployeeList');\ncy.wait(1000);\n// Click (+Add) button\ncy.xpath(\"//button[normalize-space()='Add']\").click();\ncy.url().should('include', '/web/index.php/pim/addEmployee');\n// Upload file\ncy.xpath(\"//input[@type='file']\").should('exist')\n//.selectFile(\"C:\\\\Users\\\\Reza Paramarta\\\\photo.jpg\", { force: true });\n.selectFile(\"cypress/fixtures/photo.jpg\", {\n  force: true\n});\n// Verify file upload\ncy.xpath(\"//input[@type='file']\").invoke('val').should('include', 'photo.jpg');\n// Input data\ncy.xpath(\"//input[@placeholder='First Name']\").type(\"Reza\");\ncy.xpath(\"//input[@placeholder='Middle Name']\").clear();\ncy.xpath(\"//input[@placeholder='Last Name']\").type(\"Paramarta\");\n// Verify input data\ncy.xpath(\"//input[@placeholder='First Name']\").should(\"have.value\", \"Reza\");\ncy.xpath(\"//input[@placeholder='Middle Name']\").invoke(\"val\").then(val => expect(val.trim()).to.eq(\"\"));\ncy.xpath(\"//input[@placeholder='Last Name']\").should(\"have.value\", \"Paramarta\");\n// Input dan Get Id employee\ncy.xpath(\"//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@class='oxd-input oxd-input--active']\").invoke('val').should('not.be.empty').then(value => {\n  cy.log('Employee ID:', value);\n  // Verify input dan Get Id employee\n  cy.request({\n    method: 'GET',\n    url: '/web/index.php/api/v2/core/validation/unique',\n    qs: {\n      value: value,\n      entityName: 'Employee',\n      attributeName: 'employeeId'\n    },\n    failOnStatusCode: false\n  }).then(res => {\n    if (!res.body.data.valid) {\n      const newId = 'EMP' + Date.now().toString().slice(-5);\n      cy.xpath(\"//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@class='oxd-input oxd-input--active']\").clear().type(newId).should('have.value', newId);\n      cy.log('Updated ID:', newId);\n    }\n    cy.intercept('POST', '**/pim/employees').as('createEmployee');\n    cy.xpath(\"//button[normalize-space()='Save']\").click();\n    cy.wait('@createEmployee').then(interception => {\n      cy.log('Request:', JSON.stringify(interception.request.body));\n      cy.log('Status:', interception.response.statusCode);\n      cy.log('Response:', JSON.stringify(interception.response.body));\n      expect(interception.response.statusCode).to.eq(200);\n    });\n  });\n});\n// verify success add employee\ncy.url().should('contains', '/web/index.php/pim/viewPersonalDetails/empNumber/');",
+              "err": {},
+              "uuid": "71339b4f-0377-457f-9060-e02d5a1b7d96",
+              "parentUUID": "90f77e5c-3c47-48cf-b374-15405cdeaf24",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "71339b4f-0377-457f-9060-e02d5a1b7d96"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 18191,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
