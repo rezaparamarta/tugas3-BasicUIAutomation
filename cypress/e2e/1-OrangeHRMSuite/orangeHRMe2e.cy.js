@@ -15,7 +15,7 @@ describe('Add New Employee', function () {
     });
   });
 
-  it.skip('Soal ke 1 - Positive Case - Login and Add New Employee', function () {
+  it.only('Soal ke 1 - Positive Case - Login and Add New Employee', function () {
     cy.get(':nth-child(2) > .oxd-main-menu-item').click();
     cy.url().should('include', '/web/index.php/pim/viewEmployeeList');
     cy.wait(1000);
@@ -25,7 +25,8 @@ describe('Add New Employee', function () {
     // Upload file
     cy.xpath("//input[@type='file']")
       .should('exist')
-      .selectFile("C:\\Users\\Reza Paramarta\\photo.jpg", { force: true });
+      //.selectFile("C:\\Users\\Reza Paramarta\\photo.jpg", { force: true });
+      .selectFile("../../../photo.jpg", { force: true });
     // Verify file upload
     cy.xpath("//input[@type='file']")
       .invoke('val')
@@ -82,7 +83,7 @@ describe('Add New Employee', function () {
       cy.url().should('contains', '/web/index.php/pim/viewPersonalDetails/empNumber/');
   });
 
-  it.skip('Soal ke 1 - Negative Case - Login and Fail Add New Employee', function () {
+  it('Soal ke 1 - Negative Case - Login and Fail Add New Employee', function () {
     cy.get(':nth-child(2) > .oxd-main-menu-item').click();
     cy.url().should('include', '/web/index.php/pim/viewEmployeeList');
     cy.wait(1000);
@@ -112,7 +113,7 @@ describe('Add New Employee', function () {
   });
 
   // Test Case Soal 2 -- Positive Case
-  it.skip('Soal ke - 2 : Positive Case - Login and Add Jatah Cuti', function() {
+  it('Soal ke - 2 : Positive Case - Login and Add Jatah Cuti', function() {
     // Ensure Leave and Click its module
     cy.xpath("//a[@class='oxd-main-menu-item active']").should('be.visible');
     cy.get(':nth-child(3) > .oxd-main-menu-item').click();
@@ -167,7 +168,7 @@ describe('Add New Employee', function () {
     });
 
   // Test Case Soal 2 -- Negative Case - //span[normalize-space()='Entitlements']
-  it.skip('Soal ke 2 : Negative Case - Fail Add Jatah Cuti', function() {
+  it('Soal ke 2 : Negative Case - Fail Add Jatah Cuti', function() {
     // Ensure Leave and Click its module
     cy.xpath("//a[@class='oxd-main-menu-item active']").should('be.visible');
     cy.get(':nth-child(3) > .oxd-main-menu-item').click();
