@@ -1,0 +1,201 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 5,
+    "passes": 4,
+    "pending": 1,
+    "failures": 0,
+    "start": "2025-05-12T06:16:29.749Z",
+    "end": "2025-05-12T06:17:22.853Z",
+    "duration": 53104,
+    "testsRegistered": 5,
+    "passPercent": 100,
+    "pendingPercent": 20,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "752c5b2f-1609-4f04-81be-d8e6ba2d1be7",
+      "title": "",
+      "fullFile": "cypress\\e2e\\1-OrangeHRMSuite\\orangeHRMe2e.cy.js",
+      "file": "cypress\\e2e\\1-OrangeHRMSuite\\orangeHRMe2e.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "f53a500e-6caf-45bc-8095-dab242a96645",
+          "title": "Add New Employee",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Soal ke 1 - Positive Case - Login and Add New Employee",
+              "fullTitle": "Add New Employee Soal ke 1 - Positive Case - Login and Add New Employee",
+              "timedOut": null,
+              "duration": 19131,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get(':nth-child(2) > .oxd-main-menu-item').click();\ncy.url().should('include', '/web/index.php/pim/viewEmployeeList');\ncy.wait(1000);\n// Click (+Add) button\ncy.xpath(\"//button[normalize-space()='Add']\").click();\ncy.url().should('include', '/web/index.php/pim/addEmployee');\n// Upload file\ncy.xpath(\"//input[@type='file']\").should('exist')\n//.selectFile(\"C:\\\\Users\\\\Reza Paramarta\\\\photo.jpg\", { force: true });\n.selectFile(\"cypress/fixtures/photo.jpg\", {\n  force: true\n});\n// Verify file upload\ncy.xpath(\"//input[@type='file']\").invoke('val').should('include', 'photo.jpg');\n// Input data\ncy.xpath(\"//input[@placeholder='First Name']\").type(\"Reza\");\ncy.xpath(\"//input[@placeholder='Middle Name']\").clear();\ncy.xpath(\"//input[@placeholder='Last Name']\").type(\"Paramarta\");\n// Verify input data\ncy.xpath(\"//input[@placeholder='First Name']\").should(\"have.value\", \"Reza\");\ncy.xpath(\"//input[@placeholder='Middle Name']\").invoke(\"val\").then(val => expect(val.trim()).to.eq(\"\"));\ncy.xpath(\"//input[@placeholder='Last Name']\").should(\"have.value\", \"Paramarta\");\n// Input dan Get Id employee\ncy.xpath(\"//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@class='oxd-input oxd-input--active']\").invoke('val').should('not.be.empty').then(value => {\n  cy.log('Employee ID:', value);\n  // Verify input dan Get Id employee\n  cy.request({\n    method: 'GET',\n    url: '/web/index.php/api/v2/core/validation/unique',\n    qs: {\n      value: value,\n      entityName: 'Employee',\n      attributeName: 'employeeId'\n    },\n    failOnStatusCode: false\n  }).then(res => {\n    if (!res.body.data.valid) {\n      const newId = 'EMP' + Date.now().toString().slice(-5);\n      cy.xpath(\"//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@class='oxd-input oxd-input--active']\").clear().type(newId).should('have.value', newId);\n      cy.log('Updated ID:', newId);\n    }\n    cy.intercept('POST', '**/pim/employees').as('createEmployee');\n    cy.xpath(\"//button[normalize-space()='Save']\").click();\n    cy.wait('@createEmployee').then(interception => {\n      cy.log('Request:', JSON.stringify(interception.request.body));\n      cy.log('Status:', interception.response.statusCode);\n      cy.log('Response:', JSON.stringify(interception.response.body));\n      expect(interception.response.statusCode).to.eq(200);\n    });\n  });\n});\n// verify success add employee\ncy.url().should('contains', '/web/index.php/pim/viewPersonalDetails/empNumber/');",
+              "err": {},
+              "uuid": "a8059eba-9081-49d0-b5cb-cfbf3ccbd776",
+              "parentUUID": "f53a500e-6caf-45bc-8095-dab242a96645",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Soal ke 1 - Negative Case - Login and Fail Add New Employee",
+              "fullTitle": "Add New Employee Soal ke 1 - Negative Case - Login and Fail Add New Employee",
+              "timedOut": null,
+              "duration": 9263,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get(':nth-child(2) > .oxd-main-menu-item').click();\ncy.url().should('include', '/web/index.php/pim/viewEmployeeList');\ncy.wait(1000);\n// Click (+Add) button\ncy.xpath(\"//button[normalize-space()='Add']\").click();\ncy.url().should('include', '/web/index.php/pim/addEmployee');\n// Upload file\ncy.xpath(\"//input[@type='file']\").should('exist')\n//.selectFile(\"C:\\\\Users\\\\Reza Paramarta\\\\photo.jpg\", { force: true });\n.selectFile(\"cypress/fixtures/photo.jpg\", {\n  force: true\n});\n// Verify file upload\ncy.xpath(\"//input[@type='file']\").invoke('val').should('include', 'photo.jpg');\n// Input data\ncy.xpath(\"//input[@placeholder='First Name']\").type(\"Reza\");\ncy.xpath(\"//input[@placeholder='Middle Name']\").clear();\ncy.xpath(\"//input[@placeholder='Last Name']\").type(\" \");\n// Verify input data\ncy.xpath(\"//input[@placeholder='First Name']\").should(\"have.value\", \"Reza\");\ncy.xpath(\"//input[@placeholder='Middle Name']\").invoke(\"val\").then(val => expect(val.trim()).to.eq(\"\"));\ncy.xpath(\"//input[@placeholder='Last Name']\").invoke(\"val\").then(val => expect(val.trim()).to.eq(\"\"));\ncy.get('.--name-grouped-field > :nth-child(3) > .oxd-text').should('have.text', 'Required');",
+              "err": {},
+              "uuid": "74f86420-77bc-4e17-8cf0-f17a879cc19d",
+              "parentUUID": "f53a500e-6caf-45bc-8095-dab242a96645",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Soal ke - 2 : Positive Case - Login and Add Jatah Cuti",
+              "fullTitle": "Add New Employee Soal ke - 2 : Positive Case - Login and Add Jatah Cuti",
+              "timedOut": null,
+              "duration": 14169,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Ensure Leave and Click its module\ncy.xpath(\"//a[@class='oxd-main-menu-item active']\").should('be.visible');\ncy.get(':nth-child(3) > .oxd-main-menu-item').click();\n// Click Entitlements\ncy.get('.oxd-topbar-body-nav > ul > :nth-child(3)').click();\ncy.xpath(\"//a[normalize-space()='Add Entitlements']\").click();\n// Type on Employee Name*\ncy.xpath(\"//input[@placeholder='Type for hints...']\").type('Peter');\n// Tunggu dropdown muncul dan klik \"saket kumar\"\ncy.get('.oxd-autocomplete-dropdown > div', {\n  timeout: 5000\n}).contains('Peter Mac Anderson').click();\n// Verify Field filled with saket kumar\n//cy.xpath(\"//input[@placeholder='Type for hints...']\").should('have.value', 'saket kumar');\n//cy.get('.oxd-autocomplete-text-input > input').should('have.value', 'saket kumar');\ncy.get('.oxd-autocomplete-text-input > input').invoke('val').then(value => {\n  const normalized = value.replace(/\\s+/g, ' ').trim(); // ganti spasi ganda jadi satu\n  expect(normalized).to.eq('Peter Mac Anderson');\n});\n// Klik dropdown-nya\ncy.xpath(\"//label[text()='Leave Type']/ancestor::div[contains(@class,'oxd-input-group')]//div[contains(@class,'oxd-select-text')]\").click({\n  multiple: true\n});\ncy.get('.oxd-select-dropdown > div').eq(2).click();\n// Verify filled with index ke 2\ncy.xpath(\"//label[text()='Leave Type']/ancestor::div[contains(@class,'oxd-input-group')]//div[contains(@class,'oxd-select-text-input')]\").invoke('text').then(text => {\n  expect(text.trim()).to.eq('CAN - FMLA');\n});\n// Click Leave Period*\ncy.xpath(\"//div[contains(text(),'2025-01-01 - 2025-31-12')]\").click({\n  multiple: true\n});\n// Verify Leave Period filled with 2025-01-01 - 2025-31-12\ncy.xpath(\"//div[contains(text(),'2025-01-01 - 2025-31-12')]\").should('have.text', '2025-01-01 - 2025-31-12');\n// Type on Entitlement*\nlet Entitlement = 2025;\ncy.xpath(\"//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@class='oxd-input oxd-input--active']\").type(Entitlement);\n// Click 'Save' Button\ncy.xpath(\"//button[normalize-space()='Save']\").click();\n// Popup Confirm\ncy.get('.oxd-sheet').should('be.visible');\n// Click 'Confirm' Button\ncy.get('.orangehrm-modal-footer > .oxd-button--secondary').click();\n// Verify Entitlements Success\ncy.url().should('include', '/web/index.php/leave/viewLeaveEntitlements');",
+              "err": {},
+              "uuid": "61301b32-fced-475c-ab4f-5a3965897280",
+              "parentUUID": "f53a500e-6caf-45bc-8095-dab242a96645",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Soal ke 2 : Negative Case - Fail Add Jatah Cuti",
+              "fullTitle": "Add New Employee Soal ke 2 : Negative Case - Fail Add Jatah Cuti",
+              "timedOut": null,
+              "duration": 10162,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Ensure Leave and Click its module\ncy.xpath(\"//a[@class='oxd-main-menu-item active']\").should('be.visible');\ncy.get(':nth-child(3) > .oxd-main-menu-item').click();\n// Click Entitlements\ncy.get('.oxd-topbar-body-nav > ul > :nth-child(3)').click();\ncy.xpath(\"//a[normalize-space()='Add Entitlements']\").click();\n// Type on Employee Name*\ncy.xpath(\"//input[@placeholder='Type for hints...']\").type('Peter');\n// Tunggu dropdown muncul dan klik \"saket kumar\"\ncy.get('.oxd-autocomplete-dropdown > div', {\n  timeout: 5000\n}).contains('Peter Mac Anderson').click();\n// Verify Field filled with saket kumar\n//cy.xpath(\"//input[@placeholder='Type for hints...']\").should('have.value', 'saket kumar');\n//cy.get('.oxd-autocomplete-text-input > input').should('have.value', 'saket kumar');\ncy.get('.oxd-autocomplete-text-input > input').invoke('val').then(value => {\n  const normalized = value.replace(/\\s+/g, ' ').trim(); // ganti spasi ganda jadi satu\n  expect(normalized).to.eq('Peter Mac Anderson');\n});\n// Klik dropdown-nya\ncy.xpath(\"//label[text()='Leave Type']/ancestor::div[contains(@class,'oxd-input-group')]//div[contains(@class,'oxd-select-text')]\").click({\n  multiple: true\n});\ncy.get('.oxd-select-dropdown > div').eq(2).click();\n// Verify filled with index ke 2\ncy.xpath(\"//label[text()='Leave Type']/ancestor::div[contains(@class,'oxd-input-group')]//div[contains(@class,'oxd-select-text-input')]\").invoke('text').then(text => {\n  expect(text.trim()).to.eq('CAN - FMLA');\n});\n// Click Leave Period*\ncy.xpath(\"//div[contains(text(),'2025-01-01 - 2025-31-12')]\").click({\n  multiple: true\n});\n// Verify Leave Period filled with 2025-01-01 - 2025-31-12\ncy.xpath(\"//div[contains(text(),'2025-01-01 - 2025-31-12')]\").should('have.text', '2025-01-01 - 2025-31-12');\n// Type on Entitlement*\nlet Entitlement = 'Ablahulah';\ncy.xpath(\"//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@class='oxd-input oxd-input--active']\").type(Entitlement);\n// Verify Negative Test Case confirmed\ncy.get('.oxd-input-group > .oxd-text').should('have.text', 'Should be a number with upto 2 decimal places');\n// Click 'Save' Button\ncy.xpath(\"//button[normalize-space()='Save']\").click();",
+              "err": {},
+              "uuid": "a3b597dd-a80f-4acc-b278-2d475e64ef11",
+              "parentUUID": "f53a500e-6caf-45bc-8095-dab242a96645",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "a8059eba-9081-49d0-b5cb-cfbf3ccbd776",
+            "74f86420-77bc-4e17-8cf0-f17a879cc19d",
+            "61301b32-fced-475c-ab4f-5a3965897280",
+            "a3b597dd-a80f-4acc-b278-2d475e64ef11"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 52725,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "ae3f2ea5-8bd3-42da-8eeb-9d59a64ccc01",
+          "title": "e2e soal no.3",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "End-to-End: Add New Employee and Login",
+              "fullTitle": "e2e soal no.3 End-to-End: Add New Employee and Login",
+              "timedOut": null,
+              "duration": 0,
+              "state": "pending",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": true,
+              "context": null,
+              "code": "// Login sebagai Admin\ncy.visit('/web/index.php/auth/login');\ncy.xpath(\"//input[@placeholder='Username']\").type('Admin');\ncy.xpath(\"//input[@placeholder='Password']\").type('admin123');\ncy.xpath(\"//button[normalize-space()='Login']\").click();\n// Akses menu PIM dan klik tombol Add\ncy.get(':nth-child(2) > .oxd-main-menu-item').click();\ncy.url().should('include', '/web/index.php/pim/viewEmployeeList');\ncy.wait(1000);\ncy.xpath(\"//button[normalize-space()='Add']\").click();\ncy.url().should('include', '/web/index.php/pim/addEmployee');\n// Upload foto\ncy.xpath(\"//input[@type='file']\").should('exist').selectFile(\"C:\\\\Users\\\\Reza Paramarta\\\\photo.jpg\", {\n  force: true\n});\ncy.xpath(\"//input[@type='file']\").invoke('val').should('include', 'photo.jpg');\n// Isi nama lengkap\ncy.xpath(\"//input[@placeholder='First Name']\").type(\"Reza\");\ncy.xpath(\"//input[@placeholder='Middle Name']\").type(\" \");\ncy.xpath(\"//input[@placeholder='Last Name']\").type(\"Paramarta\");\n// Verifikasi nama\ncy.xpath(\"//input[@placeholder='First Name']\").should(\"have.value\", \"Reza\");\ncy.xpath(\"//input[@placeholder='Middle Name']\").invoke(\"val\").then(val => expect(val.trim()).to.eq(\"\"));\ncy.xpath(\"//input[@placeholder='Last Name']\").should(\"have.value\", \"Paramarta\");\n// Generate Employee ID dan Username unik\nconst newEmployeeId = 'EMP' + Date.now().toString().slice(-6);\nconst uniqueUsername = `pegawai_${Date.now()}`;\ncy.wrap(newEmployeeId).as('generatedEmployeeId');\ncy.wrap(uniqueUsername).as('generatedUsername');\n// Input Employee ID\ncy.xpath(\"//label[contains(text(),'Employee Id')]/../following-sibling::div//input\").clear({\n  force: true\n}).type(newEmployeeId).should('have.value', newEmployeeId);\n// Aktifkan login dan isi data login\ncy.get('.oxd-switch-input').click();\ncy.get(':nth-child(4) > .oxd-grid-2 > :nth-child(1) input').type(uniqueUsername);\ncy.xpath(\"//label[text()='Password']/following::input[1]\").type('Aku123!');\ncy.xpath(\"//label[text()='Confirm Password']/following::input[1]\").type('Aku123!');\ncy.get('.oxd-button--secondary').click();\ncy.get('.oxd-toast').should('be.visible'); // Notifikasi sukses muncul\ncy.wait(1000); // Tambahan waktu aman untuk backend menyimpan data\n// Logout Admin\ncy.get('.oxd-userdropdown-tab').click();\ncy.wait(1000);\ncy.get(':nth-child(4) > .oxd-userdropdown-link').click();\n// Login sebagai user baru\ncy.visit('/web/index.php/auth/login');\ncy.xpath(\"//input[@placeholder='Username']\").type(uniqueUsername);\ncy.xpath(\"//input[@placeholder='Password']\").type('Aku123!');\ncy.xpath(\"//button[normalize-space()='Login']\").click();\n// Verifikasi berhasil login: pastikan elemen dashboard terlihat\ncy.url().should('include', '/dashboard');\ncy.get('.oxd-topbar-header-breadcrumb').should('contain.text', 'Dashboard');\n// Test Soal no 3 invalid credentials terus saat saya coba login menggunakan user baru",
+              "err": {},
+              "uuid": "837ec1a8-8131-4082-ac22-c0f2f3984a0a",
+              "parentUUID": "ae3f2ea5-8bd3-42da-8eeb-9d59a64ccc01",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [],
+          "pending": [
+            "837ec1a8-8131-4082-ac22-c0f2f3984a0a"
+          ],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

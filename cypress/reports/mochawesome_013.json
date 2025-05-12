@@ -1,0 +1,109 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2025-05-12T06:06:43.773Z",
+    "end": "2025-05-12T06:06:54.830Z",
+    "duration": 11057,
+    "testsRegistered": 1,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "d068a184-0239-4f9c-98e1-dbf3409a36bf",
+      "title": "",
+      "fullFile": "cypress\\e2e\\1-OrangeHRMSuite\\orangeHRMe2e.cy.js",
+      "file": "cypress\\e2e\\1-OrangeHRMSuite\\orangeHRMe2e.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "0dca5590-3ea9-4d23-9c12-bceb59a8f530",
+          "title": "Add New Employee",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Soal ke - 2 : Positive Case - Login and Add Jatah Cuti",
+              "fullTitle": "Add New Employee Soal ke - 2 : Positive Case - Login and Add Jatah Cuti",
+              "timedOut": null,
+              "duration": 11003,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Ensure Leave and Click its module\ncy.xpath(\"//a[@class='oxd-main-menu-item active']\").should('be.visible');\ncy.get(':nth-child(3) > .oxd-main-menu-item').click();\n// Click Entitlements\ncy.get('.oxd-topbar-body-nav > ul > :nth-child(3)').click();\ncy.xpath(\"//a[normalize-space()='Add Entitlements']\").click();\n// Ketik huruf 'r' di field employee name\ncy.xpath(\"//input[@placeholder='Type for hints...']\").type('r');\n// Ambil suggestion berdasarkan index (misalnya index ke-0)\ncy.get('.oxd-autocomplete-dropdown > div', {\n  timeout: 5000\n}).eq(0).then($el => {\n  const selectedText = $el.text().replace(/\\s+/g, ' ').trim(); // simpan teks-nya\n  $el.click(); // klik suggestion-nya\n  // Verifikasi bahwa input field terisi dengan value yang sama\n  cy.get('.oxd-autocomplete-text-input > input').invoke('val').then(value => {\n    const normalized = value.replace(/\\s+/g, ' ').trim();\n    expect(normalized).to.eq(selectedText);\n  });\n});\n// Klik dropdown-nya\ncy.xpath(\"//label[text()='Leave Type']/ancestor::div[contains(@class,'oxd-input-group')]//div[contains(@class,'oxd-select-text')]\").click({\n  multiple: true\n});\ncy.get('.oxd-select-dropdown > div').eq(2).click();\n// Verify filled with index ke 2\ncy.xpath(\"//label[text()='Leave Type']/ancestor::div[contains(@class,'oxd-input-group')]//div[contains(@class,'oxd-select-text-input')]\").invoke('text').then(text => {\n  expect(text.trim()).to.eq('CAN - FMLA');\n});\n// Click Leave Period*\ncy.xpath(\"//div[contains(text(),'2025-01-01 - 2025-31-12')]\").click({\n  multiple: true\n});\n// Verify Leave Period filled with 2025-01-01 - 2025-31-12\ncy.xpath(\"//div[contains(text(),'2025-01-01 - 2025-31-12')]\").should('have.text', '2025-01-01 - 2025-31-12');\n// Type on Entitlement*\nlet Entitlement = 2025;\ncy.xpath(\"//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@class='oxd-input oxd-input--active']\").type(Entitlement);\n// Click 'Save' Button\ncy.xpath(\"//button[normalize-space()='Save']\").click();\n// Popup Confirm\ncy.get('.oxd-sheet').should('be.visible');\n// Click 'Confirm' Button\ncy.get('.orangehrm-modal-footer > .oxd-button--secondary').click();\n// Verify Entitlements Success\ncy.url().should('include', '/web/index.php/leave/viewLeaveEntitlements');",
+              "err": {
+                "message": "AssertionError: expected 'r' to equal 'Searching....'",
+                "estack": "AssertionError: expected 'r' to equal 'Searching....'\n    at Context.eval (webpack://tugas3-basicuiautomation/./cypress/e2e/1-OrangeHRMSuite/orangeHRMe2e.cy.js:141:34)\n    at getRet (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:119616:20)\n    at tryCatcher (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise.attempt.Promise.try (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:4285:29)\n    at Context.thenFn (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:119627:66)\n    at Context.then (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:119878:21)",
+                "diff": "- 'r'\n+ 'Searching....'\n"
+              },
+              "uuid": "65cf87d4-f4cc-4cec-b412-fd53c57da38b",
+              "parentUUID": "0dca5590-3ea9-4d23-9c12-bceb59a8f530",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "65cf87d4-f4cc-4cec-b412-fd53c57da38b"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 11003,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

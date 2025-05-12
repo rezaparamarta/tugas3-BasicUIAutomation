@@ -124,11 +124,11 @@ describe('Add New Employee', function () {
     cy.xpath("//a[normalize-space()='Add Entitlements']").click();
 
     // Type on Employee Name*
-    cy.xpath("//input[@placeholder='Type for hints...']").type('r');
+    cy.xpath("//input[@placeholder='Type for hints...']").type('Peter');
 
     // Tunggu dropdown muncul dan klik "saket kumar"
     cy.get('.oxd-autocomplete-dropdown > div', { timeout: 5000 })
-      .contains('saket kumar')
+      .contains('Peter Mac Anderson')
       .click();
 
     // Verify Field filled with saket kumar
@@ -138,7 +138,7 @@ describe('Add New Employee', function () {
     .invoke('val')
     .then((value) => {
       const normalized = value.replace(/\s+/g, ' ').trim(); // ganti spasi ganda jadi satu
-      expect(normalized).to.eq('saket kumar');
+      expect(normalized).to.eq('Peter Mac Anderson');
     });
     // Klik dropdown-nya
     cy.xpath("//label[text()='Leave Type']/ancestor::div[contains(@class,'oxd-input-group')]//div[contains(@class,'oxd-select-text')]").click({multiple: true});
@@ -185,18 +185,21 @@ describe('Add New Employee', function () {
     cy.xpath("//a[normalize-space()='Add Entitlements']").click();
 
     // Type on Employee Name*
-    cy.xpath("//input[@placeholder='Type for hints...']").type('r');
+    cy.xpath("//input[@placeholder='Type for hints...']").type('Peter');
 
-    // Waiting on API response
-    cy.get('.oxd-autocomplete-dropdown > div')
-      .contains('saket kumar')
+    // Tunggu dropdown muncul dan klik "saket kumar"
+    cy.get('.oxd-autocomplete-dropdown > div', { timeout: 5000 })
+      .contains('Peter Mac Anderson')
       .click();
 
+    // Verify Field filled with saket kumar
+    //cy.xpath("//input[@placeholder='Type for hints...']").should('have.value', 'saket kumar');
+    //cy.get('.oxd-autocomplete-text-input > input').should('have.value', 'saket kumar');
     cy.get('.oxd-autocomplete-text-input > input')
-      .invoke('val')
-      .then((value) => {
-        const normalized = value.replace(/\s+/g, ' ').trim(); // ganti spasi ganda jadi satu
-        expect(normalized).to.eq('saket kumar');
+    .invoke('val')
+    .then((value) => {
+      const normalized = value.replace(/\s+/g, ' ').trim(); // ganti spasi ganda jadi satu
+      expect(normalized).to.eq('Peter Mac Anderson');
     });
 
     // Klik dropdown-nya

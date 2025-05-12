@@ -20,6 +20,6 @@ module.exports = defineConfig({
       username: "Admin",
       password: "admin123",
     },
-    video: false,
+    video: true,
   },
 });
