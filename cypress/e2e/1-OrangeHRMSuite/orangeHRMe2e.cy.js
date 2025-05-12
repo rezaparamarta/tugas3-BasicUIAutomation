@@ -274,6 +274,9 @@ describe('Add New Employee', function () {
       cy.xpath("//label[text()='Password']/following::input[1]").type('Aku123!');
       cy.xpath("//label[text()='Confirm Password']/following::input[1]").type('Aku123!');
       cy.get('.oxd-button--secondary').click();
+      cy.get('.oxd-toast').should('be.visible'); // Notifikasi sukses muncul
+      cy.wait(1000); // Tambahan waktu aman untuk backend menyimpan data
+
   
       // Logout Admin
       cy.get('.oxd-userdropdown-tab').click();
