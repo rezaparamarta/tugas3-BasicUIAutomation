@@ -1,0 +1,109 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2025-05-12T05:37:30.066Z",
+    "end": "2025-05-12T05:38:12.532Z",
+    "duration": 42466,
+    "testsRegistered": 1,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "0ff5ac80-aa6b-4441-a624-dd361597bbe7",
+      "title": "",
+      "fullFile": "cypress\\e2e\\1-OrangeHRMSuite\\orangeHRMe2e.cy.js",
+      "file": "cypress\\e2e\\1-OrangeHRMSuite\\orangeHRMe2e.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "c45e8f43-8916-48b2-992d-507e51bb68ae",
+          "title": "Add New Employee",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Soal ke - 2 : Positive Case - Login and Add Jatah Cuti",
+              "fullTitle": "Add New Employee Soal ke - 2 : Positive Case - Login and Add Jatah Cuti",
+              "timedOut": null,
+              "duration": 42410,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Ensure Leave and Click its module\ncy.xpath(\"//a[@class='oxd-main-menu-item active']\").should('be.visible');\ncy.get(':nth-child(3) > .oxd-main-menu-item').click();\n// Click Entitlements\ncy.get('.oxd-topbar-body-nav > ul > :nth-child(3)').click();\ncy.xpath(\"//a[normalize-space()='Add Entitlements']\").click();\n// Type on Employee Name*\ncy.xpath(\"//input[@placeholder='Type for hints...']\").type('Peter');\n// Waiting on API response\ncy.wait(1000);\ncy.get('.oxd-autocomplete-dropdown > div').contains('Peter Mac Anderson').click();\n// Verify Field filled with Peter Mac Anderson\ncy.xpath(\"//input[@placeholder='Type for hints...']\").should('have.value', 'Peter Mac Anderson');\n// Klik dropdown-nya\ncy.xpath(\"//label[text()='Leave Type']/ancestor::div[contains(@class,'oxd-input-group')]//div[contains(@class,'oxd-select-text')]\").click({\n  multiple: true\n});\ncy.get('.oxd-select-dropdown > div').eq(2).click();\n// Verify filled with index ke 2\ncy.xpath(\"//label[text()='Leave Type']/ancestor::div[contains(@class,'oxd-input-group')]//div[contains(@class,'oxd-select-text-input')]\").invoke('text').then(text => {\n  expect(text.trim()).to.eq('CAN - FMLA');\n});\n// Click Leave Period*\ncy.xpath(\"//div[contains(text(),'2025-01-01 - 2025-31-12')]\").click({\n  multiple: true\n});\n// Verify Leave Period filled with 2025-01-01 - 2025-31-12\ncy.xpath(\"//div[contains(text(),'2025-01-01 - 2025-31-12')]\").should('have.text', '2025-01-01 - 2025-31-12');\n// Type on Entitlement*\nlet Entitlement = 2025;\ncy.xpath(\"//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@class='oxd-input oxd-input--active']\").type(Entitlement);\n// Click 'Save' Button\ncy.xpath(\"//button[normalize-space()='Save']\").click();\n// Popup Confirm\ncy.get('.oxd-sheet').should('be.visible');\n// Click 'Confirm' Button\ncy.get('.orangehrm-modal-footer > .oxd-button--secondary').click();\n// Verify Entitlements Success\ncy.url().should('include', '/web/index.php/leave/viewLeaveEntitlements');",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 30000ms: Expected to find content: 'Peter Mac Anderson' within the element: <div.oxd-autocomplete-option> but never did.",
+                "estack": "AssertionError: Timed out retrying after 30000ms: Expected to find content: 'Peter Mac Anderson' within the element: <div.oxd-autocomplete-option> but never did.\n    at Context.eval (webpack://tugas3-basicuiautomation/./cypress/e2e/1-OrangeHRMSuite/orangeHRMe2e.cy.js:132:7)",
+                "diff": null
+              },
+              "uuid": "80dbe40e-28f1-4e70-adb3-713badd659eb",
+              "parentUUID": "c45e8f43-8916-48b2-992d-507e51bb68ae",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "80dbe40e-28f1-4e70-adb3-713badd659eb"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 42410,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
